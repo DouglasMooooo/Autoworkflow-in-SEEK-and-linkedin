@@ -1,0 +1,46 @@
+{
+  "name": "Douglas Mo",
+  "title": "Business Analyst | Data & AI Analytics | Finance & Commercial Operations",
+  "email": "d157156@gmail.com",
+  "phone": "0434 001 262",
+  "linkedin": "https://www.linkedin.com/in/douglas-mo-67344531b/",
+  "github": "https://github.com/DouglasMooooo",
+  "portfolio": "https://douglas-digital-twin.vercel.app",
+  "location": "Brisbane, Australia",
+  "address_line": "Algester Rd, Brisbane, QLD",
+  "gender": "Male",
+  "ethnicity": "Chinese",
+  "languages": [
+    "English",
+    "Mandarin",
+    "Cantonese"
+  ],
+  "has_disability": "No",
+  "is_lgbti": "No",
+  "work_authorization": "International Student Visa (24h/week during semester, full-time during breaks). Target 485 Graduate Visa after graduation.",
+  "graduation_date": "June 2026",
+  "availability_note": "Available to start immediately for part-time or internship roles. Full-time from July 2026.",
+  "salary_expectations": "$65,000 - $80,000 AUD for graduate roles",
+  "relocation_willing": true,
+  "location_preferences": [
+    "Brisbane",
+    "Melbourne",
+    "Sydney",
+    "Hybrid",
+    "Remote"
+  ],
+  "core_strengths": [
+    "Customer-facing operations",
+    "Business analysis and reporting",
+    "Forecasting and KPI tracking",
+    "Commercial performance improvement",
+    "AI-enabled workflow automation"
+  ],
+  "headline_achievements": [
+    "Identified $1.8M at-risk revenue through dashboarding and analysis",
+    "Reduced churn from 22% to 16%, protecting ~$600K revenue",
+    "Improved promotional ROI from 8% to 23% (+$85K)",
+    "Improved forecast accuracy from 70% to 94%",
+    "Built production AI digital twin with 95% accuracy and <2s response latency"
+  ]
+}
