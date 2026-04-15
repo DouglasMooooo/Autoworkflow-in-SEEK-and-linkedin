@@ -36,6 +36,75 @@
     "Commercial performance improvement",
     "AI-enabled workflow automation"
   ],
+  "finance_capabilities": [
+    {
+      "signal": "reconciliations",
+      "evidence": "strong",
+      "wording": "Experience with reconciliations across cash management, bank activity, and reporting workflows."
+    },
+    {
+      "signal": "month_end_support",
+      "evidence": "strong",
+      "wording": "Experience with month-end support, reporting preparation, and close-process discipline."
+    },
+    {
+      "signal": "financial_reporting",
+      "evidence": "strong",
+      "wording": "Delivered financial reporting, performance tracking, and finance analysis across operational workflows."
+    },
+    {
+      "signal": "tax_compliance",
+      "evidence": "strong",
+      "wording": "Delivered tax compliance work across high-volume filings with accuracy and reporting discipline."
+    },
+    {
+      "signal": "accounts_payable",
+      "evidence": "moderate",
+      "wording": "Experience with accounts payable coordination, payment scheduling, and finance operations support."
+    },
+    {
+      "signal": "accounts_receivable",
+      "evidence": "moderate",
+      "wording": "Experience with accounts receivable tracking, aging visibility, and customer account workflows."
+    },
+    {
+      "signal": "invoicing",
+      "evidence": "moderate",
+      "wording": "Exposure to invoicing and billing workflows within finance operations."
+    },
+    {
+      "signal": "p_and_l_reporting",
+      "evidence": "moderate",
+      "wording": "Experience with profit and loss reporting, performance tracking, and finance decision support."
+    },
+    {
+      "signal": "accounting_systems",
+      "evidence": "strong",
+      "wording": "Experience with accounting systems and ERP-supported finance workflows."
+    }
+  ],
+  "accounting_software_exposure": [
+    {
+      "tool": "xero",
+      "evidence": "moderate",
+      "wording": "Exposure to Xero within SME accounting workflow contexts."
+    },
+    {
+      "tool": "myob",
+      "evidence": "moderate",
+      "wording": "Exposure to MYOB within bookkeeping and finance operations workflows."
+    },
+    {
+      "tool": "quickbooks",
+      "evidence": "strong",
+      "wording": "Hands-on experience with QuickBooks for finance operations and reporting workflows."
+    },
+    {
+      "tool": "sap",
+      "evidence": "strong",
+      "wording": "Hands-on exposure to SAP and ERP-supported finance workflows."
+    }
+  ],
   "headline_achievements": [
     "Identified $1.8M at-risk revenue through dashboarding and analysis",
     "Reduced churn from 22% to 16%, protecting ~$600K revenue",

@@ -1,6 +1,31 @@
 .env
 __pycache__/
 *.pyc
+*$py.class
 
+# Browser profiles and cache
+.pw-browsers/
 browser_profiles/
+
+# Reference project (external)
+reference_career_ops/
+
+# Outputs and logs
 outputs/
+*.log
+
+# Environment
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Large files
+*.xlsx
+*.xls

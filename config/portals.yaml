@@ -1,0 +1,26 @@
+title_filter:
+  positive:
+    - analyst
+    - data
+    - business
+    - ai
+    - machine learning
+    - graduate
+  negative:
+    - senior
+    - principal
+    - director
+    - manager
+    - staff
+    - lead
+
+tracked_companies:
+  - name: OpenAI
+    enabled: false
+    careers_url: https://boards.greenhouse.io/openai
+  - name: Anthropic
+    enabled: false
+    careers_url: https://jobs.ashbyhq.com/Anthropic
+  - name: Canva
+    enabled: false
+    careers_url: https://www.lifeatcanva.com/en/jobs

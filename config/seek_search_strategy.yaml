@@ -1,0 +1,187 @@
+high_priority_titles:
+  - Reporting Analyst
+  - Data Analyst
+  - Data Visualisation Analyst
+  - Research Analyst
+  - Graduate Accountant
+  - Assistant Accountant
+  - Finance Officer
+  - Accounts Officer
+  - Business Support Officer
+  - Operations Analyst
+  - Process Analyst
+  - Business Analyst
+  - Automation Analyst
+  - Digital Transformation Analyst
+  - Innovation Analyst
+  - Business Improvement Analyst
+  - AI Business Analyst
+  - AI Operations Analyst
+  - AI Automation Analyst
+
+medium_priority_titles:
+  - Product Analyst
+  - Junior Product Analyst
+  - PMO Analyst
+  - Change Analyst
+  - Solutions Analyst
+  - Systems Analyst
+  - Transformation Analyst
+  - Commercial Analyst
+  - Finance Analyst
+  - Data & Reporting Analyst
+  - Business Intelligence Analyst
+  - AI Enablement Analyst
+  - AI Transformation Analyst
+  - Process Improvement Analyst
+
+low_priority_titles:
+  - Graduate Program
+  - Business Graduate
+  - Commercial Graduate
+  - Operations Graduate
+  - Technology Graduate
+  - Digital Graduate
+
+keyword_groups:
+  data_reporting:
+    - Power BI
+    - SQL
+    - Excel
+    - dashboard
+    - KPI
+    - reporting
+    - visualisation
+    - analytics
+  accounting_finance:
+    - reconciliations
+    - month-end
+    - financial reporting
+    - tax
+    - compliance
+    - AP
+    - AR
+    - invoicing
+    - Xero
+    - MYOB
+    - QuickBooks
+    - ERP
+    - SAP
+  business_process:
+    - stakeholder
+    - requirements
+    - workflow
+    - documentation
+    - process improvement
+    - operational reporting
+    - process mapping
+    - UAT
+    - business process
+  ai_fused_business:
+    - AI
+    - automation
+    - workflow automation
+    - digital transformation
+    - process automation
+    - AI adoption
+    - AI enablement
+    - business transformation
+    - intelligent automation
+    - operational efficiency
+    - decision support
+    - productivity
+    - innovation
+    - AI tools
+    - LLM
+    - copilots
+
+ai_fused_business_bucket:
+  - AI Business Analyst
+  - AI Operations Analyst
+  - Automation Analyst
+  - Digital Transformation Analyst
+  - Business Improvement Analyst
+  - Innovation Analyst
+  - Transformation Analyst
+  - AI Enablement Analyst
+  - Process Improvement Analyst
+  - Operations Analyst
+
+query_templates:
+  - bucket: high
+    label: data_reporting_core
+    query: Reporting Analyst Power BI SQL
+  - bucket: high
+    label: data_analyst_core
+    query: Data Analyst dashboard reporting
+  - bucket: high
+    label: accounting_reporting_core
+    query: Graduate Accountant reconciliations month-end
+  - bucket: high
+    label: accounting_systems_core
+    query: Accounts Officer AP AR Xero
+  - bucket: high
+    label: business_analyst_core
+    query: Business Analyst workflow stakeholder process
+  - bucket: high
+    label: business_support_core
+    query: Business Support Officer reporting Excel
+  - bucket: high
+    label: ai_fused_ba
+    query: Business Analyst AI automation transformation
+  - bucket: high
+    label: ai_fused_ops
+    query: Operations Analyst AI automation
+  - bucket: high
+    label: ai_fused_transformation
+    query: Digital Transformation Analyst AI process automation
+  - bucket: medium
+    label: finance_analyst
+    query: Finance Analyst reporting reconciliations
+  - bucket: medium
+    label: bi_analyst
+    query: Business Intelligence Analyst Power BI dashboard
+  - bucket: medium
+    label: systems_analyst
+    query: Systems Analyst workflow documentation
+  - bucket: medium
+    label: ai_enablement
+    query: AI Enablement Analyst business transformation
+  - bucket: low
+    label: business_graduate
+    query: Business Graduate reporting operations
+
+exclusion_keywords:
+  - Senior
+  - Lead
+  - Principal
+  - Manager
+  - Architect
+  - Engineer
+  - Scientist
+  - Researcher
+  - Citizen
+  - Permanent Resident
+  - unrestricted work rights
+  - 5+ years
+  - 7+ years
+  - 10+ years
+
+hard_mismatch_phrases:
+  - only candidates with permanent australian work rights
+  - permanent australian work rights
+  - australian citizen
+  - australian or new zealand citizen
+  - permanent resident
+  - unrestricted work rights
+  - full australian work rights for the three-year program
+  - full australian working rights for the three-year program
+
+downrank_pure_technical_ai:
+  - ai engineer
+  - ml engineer
+  - llm engineer
+  - ai researcher
+  - senior data scientist
+  - machine learning engineer
+  - research scientist
