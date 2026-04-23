@@ -49,6 +49,24 @@ class ATSResult:
 
 
 @dataclass
+class StrategyDecision:
+    target_tier: str
+    priority_level: str
+    apply_decision: str
+    suggested_positioning: str
+    cv_focus: str
+    cover_letter_tone: str
+    skill_match_score: float
+    experience_alignment_score: float
+    career_value_score: float
+    interview_probability_score: float
+    overall_match_score: float
+    recruiter_outreach_message: str = ""
+    interview_talking_points: List[str] = field(default_factory=list)
+    decision_notes: List[str] = field(default_factory=list)
+
+
+@dataclass
 class GenerationResult:
     role_family: str
     role_lock: str
@@ -58,5 +76,6 @@ class GenerationResult:
     resume_text: str
     cover_letter_text: str
     ats_result: ATSResult
+    strategy: StrategyDecision
     iteration_count: int
     skip_reason: str = ""

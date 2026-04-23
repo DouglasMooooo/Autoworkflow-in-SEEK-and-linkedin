@@ -1,171 +1,214 @@
-high_priority_titles:
-  - Reporting Analyst
-  - Data Analyst
-  - Data Visualisation Analyst
-  - Research Analyst
-  - Graduate Accountant
-  - Assistant Accountant
-  - Finance Officer
-  - Accounts Officer
-  - Business Support Officer
-  - Operations Analyst
-  - Process Analyst
-  - Business Analyst
-  - Automation Analyst
-  - Digital Transformation Analyst
-  - Innovation Analyst
-  - Business Improvement Analyst
-  - AI Business Analyst
-  - AI Operations Analyst
-  - AI Automation Analyst
+bucket_priority_order:
+  - data_reporting_bi
+  - finance_accounting
+  - ba_entry_project_support
+  - business_commercial_graduate
+  - ai_business_automation
 
-medium_priority_titles:
-  - Product Analyst
-  - Junior Product Analyst
-  - PMO Analyst
-  - Change Analyst
-  - Solutions Analyst
-  - Systems Analyst
-  - Transformation Analyst
-  - Commercial Analyst
-  - Finance Analyst
-  - Data & Reporting Analyst
-  - Business Intelligence Analyst
-  - AI Enablement Analyst
-  - AI Transformation Analyst
-  - Process Improvement Analyst
+role_buckets:
+  - id: ba_entry_project_support
+    label: BA Entry / Project Support
+    titles:
+      - Junior Business Analyst
+      - Graduate Business Analyst
+      - Business Analyst Intern
+      - Project Support Analyst
+      - PMO Analyst
+      - Project Coordinator
+      - Process Analyst
+      - Operations Analyst
+      - Business Support Analyst
+      - Systems Support Analyst
+      - Implementation Consultant
+      - Product Support Analyst
+    supporting_keywords:
+      - requirements gathering
+      - process mapping
+      - workflow
+      - stakeholder
+      - documentation
+      - UAT
+      - business process
+      - process improvement
+      - project support
+      - change support
 
-low_priority_titles:
-  - Graduate Program
-  - Business Graduate
-  - Commercial Graduate
-  - Operations Graduate
-  - Technology Graduate
-  - Digital Graduate
+  - id: data_reporting_bi
+    label: Data / Reporting / BI
+    titles:
+      - Reporting Analyst
+      - Data Analyst
+      - Junior Data Analyst
+      - Graduate Data Analyst
+      - Data Visualisation Analyst
+      - Business Intelligence Analyst
+      - BI Analyst
+      - Insights Analyst
+      - Performance Analyst
+      - Research Analyst
+      - Data & Reporting Analyst
+    supporting_keywords:
+      - Power BI
+      - SQL
+      - Excel
+      - dashboard
+      - KPI
+      - reporting
+      - data analysis
+      - data visualisation
+      - insights
+      - data validation
 
-keyword_groups:
-  data_reporting:
-    - Power BI
-    - SQL
-    - Excel
-    - dashboard
-    - KPI
-    - reporting
-    - visualisation
-    - analytics
-  accounting_finance:
-    - reconciliations
-    - month-end
-    - financial reporting
-    - tax
-    - compliance
-    - AP
-    - AR
-    - invoicing
-    - Xero
-    - MYOB
-    - QuickBooks
-    - ERP
-    - SAP
-  business_process:
-    - stakeholder
-    - requirements
-    - workflow
-    - documentation
-    - process improvement
-    - operational reporting
-    - process mapping
-    - UAT
-    - business process
-  ai_fused_business:
-    - AI
-    - automation
-    - workflow automation
-    - digital transformation
-    - process automation
-    - AI adoption
-    - AI enablement
-    - business transformation
-    - intelligent automation
-    - operational efficiency
-    - decision support
-    - productivity
-    - innovation
-    - AI tools
-    - LLM
-    - copilots
+  - id: finance_accounting
+    label: Finance / Accounting
+    titles:
+      - Graduate Accountant
+      - Junior Accountant
+      - Assistant Accountant
+      - Undergraduate Accountant
+      - Finance Officer
+      - Accounts Officer
+      - Accounts Assistant
+      - Accounts Payable Officer
+      - Accounts Receivable Officer
+      - Bookkeeper
+      - Finance Administrator
+      - Finance Assistant
+      - Graduate Finance Analyst
+      - Commercial Finance Analyst
+    supporting_keywords:
+      - reconciliations
+      - month-end
+      - financial reporting
+      - tax compliance
+      - AP
+      - AR
+      - invoicing
+      - accounts payable
+      - accounts receivable
+      - Xero
+      - MYOB
+      - QuickBooks
+      - SAP
+      - ERP
+      - P&L
+      - forecasting
 
-ai_fused_business_bucket:
-  - AI Business Analyst
-  - AI Operations Analyst
-  - Automation Analyst
-  - Digital Transformation Analyst
-  - Business Improvement Analyst
-  - Innovation Analyst
-  - Transformation Analyst
-  - AI Enablement Analyst
-  - Process Improvement Analyst
-  - Operations Analyst
+  - id: business_commercial_graduate
+    label: Business / Commercial Graduate
+    titles:
+      - Business Graduate
+      - Graduate Program
+      - Commercial Graduate
+      - Operations Graduate
+      - Business Management Graduate
+      - Finance Graduate
+      - Analytics Graduate
+      - Technology Graduate
+      - Digital Graduate
+      - Graduate Analyst
+    supporting_keywords:
+      - customer support
+      - commercial analysis
+      - operations
+      - coordination
+      - administration
+      - sales support
+      - client communication
+      - business operations
+      - graduate program
+      - learning agility
+
+  - id: ai_business_automation
+    label: AI + Business / Automation
+    titles:
+      - AI Business Analyst
+      - AI Operations Analyst
+      - Automation Analyst
+      - Digital Transformation Analyst
+      - AI Enablement Analyst
+      - Business Automation Analyst
+      - Process Automation Analyst
+      - Innovation Analyst
+      - Business Improvement Analyst
+      - Process Improvement Analyst
+      - Transformation Analyst
+    supporting_keywords:
+      - AI
+      - automation
+      - workflow automation
+      - process automation
+      - digital transformation
+      - AI adoption
+      - AI enablement
+      - LLM
+      - copilot
+      - productivity
+      - decision support
+      - operational efficiency
 
 query_templates:
-  - bucket: high
-    label: data_reporting_core
-    query: Reporting Analyst Power BI SQL
-  - bucket: high
+  - bucket: data_reporting_bi
+    label: reporting_analyst_core
+    query: Reporting Analyst Power BI SQL dashboard
+  - bucket: data_reporting_bi
     label: data_analyst_core
-    query: Data Analyst dashboard reporting
-  - bucket: high
-    label: accounting_reporting_core
-    query: Graduate Accountant reconciliations month-end
-  - bucket: high
-    label: accounting_systems_core
-    query: Accounts Officer AP AR Xero
-  - bucket: high
-    label: business_analyst_core
-    query: Business Analyst workflow stakeholder process
-  - bucket: high
-    label: business_support_core
-    query: Business Support Officer reporting Excel
-  - bucket: high
-    label: ai_fused_ba
-    query: Business Analyst AI automation transformation
-  - bucket: high
-    label: ai_fused_ops
-    query: Operations Analyst AI automation
-  - bucket: high
-    label: ai_fused_transformation
-    query: Digital Transformation Analyst AI process automation
-  - bucket: medium
-    label: finance_analyst
-    query: Finance Analyst reporting reconciliations
-  - bucket: medium
-    label: bi_analyst
-    query: Business Intelligence Analyst Power BI dashboard
-  - bucket: medium
-    label: systems_analyst
-    query: Systems Analyst workflow documentation
-  - bucket: medium
-    label: ai_enablement
-    query: AI Enablement Analyst business transformation
-  - bucket: low
-    label: business_graduate
-    query: Business Graduate reporting operations
+    query: Data Analyst reporting KPI Excel
+  - bucket: data_reporting_bi
+    label: bi_analyst_core
+    query: Business Intelligence Analyst Power BI insights
+  - bucket: finance_accounting
+    label: grad_accountant_core
+    query: Graduate Accountant reconciliations month-end financial reporting
+  - bucket: finance_accounting
+    label: assistant_accountant_core
+    query: Assistant Accountant AP AR invoicing
+  - bucket: finance_accounting
+    label: finance_officer_core
+    query: Finance Officer accounts payable accounts receivable ERP
+  - bucket: ba_entry_project_support
+    label: junior_ba_core
+    query: Junior Business Analyst stakeholder requirements documentation
+  - bucket: ba_entry_project_support
+    label: pmo_project_support
+    query: PMO Analyst project support process mapping UAT
+  - bucket: ba_entry_project_support
+    label: process_ops_analyst
+    query: Process Analyst workflow process improvement operations
+  - bucket: business_commercial_graduate
+    label: business_graduate_core
+    query: Business Graduate operations coordination reporting
+  - bucket: business_commercial_graduate
+    label: grad_program_core
+    query: Graduate Program Commercial Graduate Business Operations
+  - bucket: ai_business_automation
+    label: ai_business_analyst
+    query: AI Business Analyst automation process improvement
+  - bucket: ai_business_automation
+    label: transformation_automation
+    query: Digital Transformation Analyst AI enablement workflow automation
+  - bucket: ai_business_automation
+    label: innovation_automation
+    query: Innovation Analyst business automation decision support
 
 exclusion_keywords:
   - Senior
   - Lead
   - Principal
   - Manager
+  - Director
   - Architect
   - Engineer
   - Scientist
   - Researcher
-  - Citizen
-  - Permanent Resident
-  - unrestricted work rights
   - 5+ years
   - 7+ years
   - 10+ years
+  - Australian Citizen
+  - Permanent Resident
+  - unrestricted work rights
+  - NV1
+  - security clearance
 
 hard_mismatch_phrases:
   - only candidates with permanent australian work rights
@@ -176,6 +219,8 @@ hard_mismatch_phrases:
   - unrestricted work rights
   - full australian work rights for the three-year program
   - full australian working rights for the three-year program
+  - security clearance required
+  - nv1
 
 downrank_pure_technical_ai:
   - ai engineer
@@ -185,3 +230,20 @@ downrank_pure_technical_ai:
   - senior data scientist
   - machine learning engineer
   - research scientist
+  - backend engineer
+  - software engineer
+  - python engineer
+
+downrank_pure_sales_terms:
+  - sales representative
+  - business development manager
+  - account executive
+  - outbound sales
+  - cold calling
+
+bucket_weights:
+  data_reporting_bi: 1.00
+  finance_accounting: 0.95
+  ba_entry_project_support: 0.9
+  business_commercial_graduate: 0.82
+  ai_business_automation: 0.78

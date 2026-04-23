@@ -67,7 +67,11 @@ PLAYWRIGHT_BROWSERS_DIR = ROOT / ".pw-browsers"
 AUDIT_FOCUS_HEADERS = [
     "pick_id",
     "status",
+    "apply_decision",
+    "priority_level",
     "match_score",
+    "target_tier",
+    "suggested_positioning",
     "posted_priority",
     "job_posted_date",
     "days_since_posted",
@@ -91,6 +95,15 @@ AUDIT_DETAIL_HEADERS = [
     "template_used",
     "keywords_injected",
     "ats_score",
+    "skill_match_score",
+    "experience_alignment_score",
+    "career_value_score",
+    "interview_probability_score",
+    "cv_focus",
+    "cover_letter_tone",
+    "decision_notes",
+    "interview_talking_points",
+    "recruiter_outreach_message",
     "section_score",
     "covered_keywords",
     "missing_keywords",
@@ -104,6 +117,8 @@ AUDIT_DETAIL_HEADERS = [
 AUDIT_ALWAYS_KEEP_HEADERS = {
     "pick_id",
     "status",
+    "apply_decision",
+    "priority_level",
     "match_score",
     "posted_priority",
     "company",
@@ -441,20 +456,21 @@ def build_tracker_markdown(rows: List[dict]) -> str:
             "",
             "## Roles",
             "",
-            "| ID | Match | Posted | Company | Title | Role | Missing | Apply URL |",
-            "|---:|---:|---|---|---|---|---|---|",
+            "| ID | Decision | Priority | Match | Posted | Company | Title | Role | Apply URL |",
+            "|---:|---|---|---:|---|---|---|---|---|",
         ]
     )
     for row in export_rows:
         lines.append(
-            "| {pick_id} | {match} | {posted} | {company} | {title} | {role_lock} | {missing} | {url} |".format(
+            "| {pick_id} | {decision} | {priority} | {match} | {posted} | {company} | {title} | {role_lock} | {url} |".format(
                 pick_id=row.get("pick_id", ""),
+                decision=row.get("apply_decision", "") or "-",
+                priority=row.get("priority_level", "") or "-",
                 match=row.get("match_score", ""),
                 posted=normalize_posted_date(row.get("job_posted_date", "")) or "-",
                 company=str(row.get("company", "")).replace("|", "/"),
                 title=str(row.get("title", "")).replace("|", "/"),
                 role_lock=row.get("role_lock", "") or "-",
-                missing=_compact_keywords(row.get("missing_tier1_keywords") or row.get("missing_keywords", "")),
                 url=row.get("application_url", "") or row.get("job_url", ""),
             )
         )
@@ -2350,6 +2366,10 @@ def run_pipeline(use_openai: bool) -> None:
                     "company": job.company,
                     "title": job.title,
                     "status": "skipped",
+                    "apply_decision": generated.strategy.apply_decision,
+                    "priority_level": generated.strategy.priority_level,
+                    "target_tier": generated.strategy.target_tier,
+                    "suggested_positioning": generated.strategy.suggested_positioning,
                     "resume_file": "",
                     "resume_safe_file": "",
                     "resume_aggressive_file": "",
@@ -2361,6 +2381,15 @@ def run_pipeline(use_openai: bool) -> None:
                     "match_score": "",
                     "ats_match_score_llm": "",
                     "ats_score": "",
+                    "skill_match_score": f"{generated.strategy.skill_match_score}",
+                    "experience_alignment_score": f"{generated.strategy.experience_alignment_score}",
+                    "career_value_score": f"{generated.strategy.career_value_score}",
+                    "interview_probability_score": f"{generated.strategy.interview_probability_score}",
+                    "cv_focus": generated.strategy.cv_focus,
+                    "cover_letter_tone": generated.strategy.cover_letter_tone,
+                    "decision_notes": " | ".join(generated.strategy.decision_notes),
+                    "interview_talking_points": " | ".join(generated.strategy.interview_talking_points),
+                    "recruiter_outreach_message": generated.strategy.recruiter_outreach_message,
                     "section_score": "",
                     "ats_keywords_used": "",
                     "covered_keywords": "",
@@ -2407,6 +2436,10 @@ def run_pipeline(use_openai: bool) -> None:
                 "company": job.company,
                 "title": job.title,
                 "status": "ready_to_apply",
+                "apply_decision": generated.strategy.apply_decision,
+                "priority_level": generated.strategy.priority_level,
+                "target_tier": generated.strategy.target_tier,
+                "suggested_positioning": generated.strategy.suggested_positioning,
                 "resume_file": str(out_file),
                 "resume_safe_file": "",
                 "resume_aggressive_file": "",
@@ -2418,6 +2451,15 @@ def run_pipeline(use_openai: bool) -> None:
                 "match_score": evaluation["match_score"],
                 "ats_match_score_llm": "",
                 "ats_score": evaluation["ats_score"],
+                "skill_match_score": f"{generated.strategy.skill_match_score}",
+                "experience_alignment_score": f"{generated.strategy.experience_alignment_score}",
+                "career_value_score": f"{generated.strategy.career_value_score}",
+                "interview_probability_score": f"{generated.strategy.interview_probability_score}",
+                "cv_focus": generated.strategy.cv_focus,
+                "cover_letter_tone": generated.strategy.cover_letter_tone,
+                "decision_notes": " | ".join(generated.strategy.decision_notes),
+                "interview_talking_points": " | ".join(generated.strategy.interview_talking_points),
+                "recruiter_outreach_message": generated.strategy.recruiter_outreach_message,
                 "section_score": evaluation["section_score"],
                 "ats_keywords_used": evaluation["ats_keywords_used"],
                 "covered_keywords": evaluation["covered_keywords"],
@@ -3189,11 +3231,11 @@ def scrape_seek_jobs(
 ) -> List[dict]:
     ensure_playwright_ready()
     debug_seek = os.getenv("SEEK_DEBUG", "").strip().lower() in {"1", "true", "yes", "on"}
-    list_timeout_ms = int(os.getenv("SEEK_LIST_TIMEOUT_MS", "25000"))
-    detail_timeout_ms = int(os.getenv("SEEK_DETAIL_TIMEOUT_MS", "12000"))
+    list_timeout_ms = int(os.getenv("SEEK_LIST_TIMEOUT_MS", "15000"))
+    detail_timeout_ms = int(os.getenv("SEEK_DETAIL_TIMEOUT_MS", "6000"))
     max_candidates = int(os.getenv("SEEK_MAX_CANDIDATES", str(max(limit * 2, 12))))
     max_detail_attempts = int(os.getenv("SEEK_MAX_DETAIL_ATTEMPTS", "1"))
-    max_runtime_s = int(os.getenv("SEEK_MAX_RUNTIME_S", "60"))
+    max_runtime_s = int(os.getenv("SEEK_MAX_RUNTIME_S", "120"))
     deadline_ts = time.time() + max_runtime_s
 
     def seek_log(message: str) -> None:
@@ -3565,9 +3607,9 @@ def scrape_seek_jobs(
             seek_log(f"open_list url={url}")
             page = context.new_page()
             page.goto(url, wait_until="commit", timeout=list_timeout_ms)
-            page.wait_for_timeout(1800)
+            page.wait_for_timeout(800)
             page.mouse.wheel(0, 2800)
-            page.wait_for_timeout(900)
+            page.wait_for_timeout(400)
             cards = page.locator("a[href*='/job/']").all()[: max(limit * 8, 80)]
             seek_log(f"list_cards={len(cards)}")
             seen = set()
@@ -3626,7 +3668,7 @@ def scrape_seek_jobs(
                         detail_page = context.new_page()
                     seek_log(f"open_detail attempt={attempt} url={href}")
                     detail_page.goto(href, wait_until="commit", timeout=detail_timeout_ms)
-                    detail_page.wait_for_timeout(700)
+                    detail_page.wait_for_timeout(250)
                     parsed = parse_seek_detail(detail_page, fallback_title=title, fallback_loc=loc)
                     jobs.append(
                         {
@@ -4068,18 +4110,47 @@ def _normalize_seek_text(value: str) -> str:
     return re.sub(r"\s+", " ", str(value or "").strip().lower())
 
 
+def _term_matches_text(text: str, term: str) -> bool:
+    hay = _normalize_seek_text(text)
+    needle = _normalize_seek_text(term)
+    if not hay or not needle:
+        return False
+    # Short alphabetic terms (AP/AR/UAT/BI) must match token boundaries.
+    if re.fullmatch(r"[a-z]{1,3}", needle):
+        return re.search(rf"(?<![a-z0-9]){re.escape(needle)}(?![a-z0-9])", hay) is not None
+    return needle in hay
+
+
 def _contains_any_term(text: str, terms: List[str]) -> bool:
-    low = _normalize_seek_text(text)
-    return any(term and _normalize_seek_text(term) in low for term in terms)
+    return any(_term_matches_text(text, term) for term in terms if term)
 
 
 def _count_terms(text: str, terms: List[str]) -> int:
-    low = _normalize_seek_text(text)
-    return sum(1 for term in terms if term and _normalize_seek_text(term) in low)
+    return sum(1 for term in terms if _term_matches_text(text, term))
 
 
 def _seek_bucket_title_priority(title: str, strategy: dict) -> Tuple[int, str]:
     low = _normalize_seek_text(title)
+    role_buckets = strategy.get("role_buckets", [])
+    if isinstance(role_buckets, list) and role_buckets:
+        priority_order = [str(x).strip() for x in strategy.get("bucket_priority_order", []) if str(x).strip()]
+        rank_map = {bucket_id: idx for idx, bucket_id in enumerate(priority_order)}
+        best_bucket = ""
+        best_score = 0
+        for bucket in role_buckets:
+            if not isinstance(bucket, dict):
+                continue
+            bucket_id = str(bucket.get("id", "")).strip()
+            titles = [str(x) for x in bucket.get("titles", []) if str(x).strip()]
+            if any(_normalize_seek_text(term) in low for term in titles):
+                rank_idx = rank_map.get(bucket_id, len(rank_map))
+                score = max(40 - (rank_idx * 6), 10)
+                if score > best_score:
+                    best_score = score
+                    best_bucket = bucket_id or "other"
+        if best_score:
+            return best_score, best_bucket
+
     for bucket_name, score, key in [
         ("high", 35, "high_priority_titles"),
         ("medium", 22, "medium_priority_titles"),
@@ -4108,13 +4179,33 @@ def rank_seek_job(job: dict, strategy: dict) -> Tuple[float, List[str], str]:
 
     score = 0.0
     reasons: List[str] = []
+    matched_bucket = ""
 
     title_score, bucket = _seek_bucket_title_priority(title, strategy)
     score += title_score
     if title_score:
         reasons.append(f"title:{bucket}")
+        matched_bucket = bucket
 
     keyword_groups = strategy.get("keyword_groups", {}) if isinstance(strategy.get("keyword_groups"), dict) else {}
+    bucket_weights = strategy.get("bucket_weights", {}) if isinstance(strategy.get("bucket_weights"), dict) else {}
+    role_buckets = strategy.get("role_buckets", []) if isinstance(strategy.get("role_buckets"), list) else []
+    for bucket in role_buckets:
+        if not isinstance(bucket, dict):
+            continue
+        bucket_id = str(bucket.get("id", "")).strip()
+        terms = [str(x) for x in bucket.get("supporting_keywords", []) if str(x).strip()]
+        if not terms:
+            continue
+        hits = _count_terms(combined, terms)
+        if hits:
+            base_weight = float(bucket_weights.get(bucket_id, 0.8))
+            bucket_boost = min(hits, 8) * (3.0 * base_weight)
+            score += bucket_boost
+            reasons.append(f"bucket_kw:{bucket_id}:{hits}")
+            if not matched_bucket:
+                matched_bucket = bucket_id
+
     group_weights = {
         "data_reporting": 3.2,
         "accounting_finance": 3.0,
@@ -4135,6 +4226,9 @@ def rank_seek_job(job: dict, strategy: dict) -> Tuple[float, List[str], str]:
     if _contains_any_term(combined, [str(x) for x in strategy.get("downrank_pure_technical_ai", [])]):
         score -= 60.0
         reasons.append("pure_technical_ai")
+    if _contains_any_term(combined, [str(x) for x in strategy.get("downrank_pure_sales_terms", [])]):
+        score -= 25.0
+        reasons.append("pure_sales")
 
     exclusion_terms = [str(x) for x in strategy.get("exclusion_keywords", []) if str(x).strip()]
     exclusion_hits = _count_terms(combined, exclusion_terms)
@@ -4160,6 +4254,8 @@ def rank_seek_job(job: dict, strategy: dict) -> Tuple[float, List[str], str]:
         score += 8.0
         reasons.append("ai_business_fit")
 
+    if matched_bucket:
+        reasons.append(f"match_bucket:{matched_bucket}")
     return round(score, 1), reasons, mismatch
 
 
@@ -4176,10 +4272,39 @@ def build_seek_strategy_report(ranked_jobs: List[dict], strategy: dict, location
     ]
     for item in strategy.get("query_templates", []):
         lines.append(f"- [{item.get('bucket','?')}] {item.get('label','query')}: {item.get('query','')}")
-    lines.extend(["", "## Top Ranked Jobs", ""])
-    for job in ranked_jobs[:20]:
+    lines.extend(
+        [
+            "",
+            "## Top Ranked Jobs",
+            "",
+            "| # | Title | Company | Location | Posted | Bucket | Score | Hard Mismatch | Reason | Job URL |",
+            "|---:|---|---|---|---|---|---:|---|---|---|",
+        ]
+    )
+    for idx, job in enumerate(ranked_jobs[:20], start=1):
+        reasons = str(job.get("search_reasons", ""))
+        bucket = ""
+        for token in [x.strip() for x in reasons.split(",") if x.strip()]:
+            if token.startswith("match_bucket:"):
+                bucket = token.split(":", 1)[1].strip()
+                break
+        mismatch = "-"
+        notes = str(job.get("notes", "")).lower()
+        if "search_filtered:" in notes:
+            mismatch = notes.split("search_filtered:", 1)[1].strip()[:80]
         lines.append(
-            f"- {job.get('search_score', 0)} | {job.get('company','')} | {job.get('title','')} | {job.get('job_posted_date','')} | {job.get('job_url','')} | {job.get('search_reasons','')}"
+            "| {idx} | {title} | {company} | {location} | {posted} | {bucket} | {score} | {mismatch} | {reason} | {url} |".format(
+                idx=idx,
+                title=str(job.get("title", "")).replace("|", "/"),
+                company=str(job.get("company", "")).replace("|", "/"),
+                location=str(job.get("location", "")).replace("|", "/"),
+                posted=job.get("job_posted_date", ""),
+                bucket=bucket or "-",
+                score=job.get("search_score", 0),
+                mismatch=mismatch,
+                reason=reasons.replace("|", "/"),
+                url=job.get("job_url", ""),
+            )
         )
     return "\n".join(lines) + "\n"
 

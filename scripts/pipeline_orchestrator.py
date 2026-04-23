@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Callable, Dict, List, Optional
 
+from application_strategy import build_application_strategy
 from ats_scorer import score_resume
 from cover_letter_generator import generate_cover_letter
 from finance_signal_injector import (
@@ -66,6 +67,7 @@ def optimize_application(
         jd_signals = parse_jd(job_title, jd_text)
         base_resume_data = parse_base_resume_text(base_resume_text)
         analysis = analyze_resume(base_resume_text, jd_signals)
+        skip_ats = score_resume("", jd_signals, analysis)
         return GenerationResult(
             role_family=jd_signals.role_family,
             role_lock=job_title,
@@ -74,7 +76,15 @@ def optimize_application(
             selected_profile_facts=[],
             resume_text="",
             cover_letter_text="",
-            ats_result=score_resume("", jd_signals, analysis),
+            ats_result=skip_ats,
+            strategy=build_application_strategy(
+                job_title=job_title,
+                company=company,
+                jd_signals=jd_signals,
+                analysis=analysis,
+                ats_result=skip_ats,
+                selected_profile_facts=[],
+            ),
             iteration_count=0,
             skip_reason=skip_reason,
         )
@@ -129,6 +139,14 @@ def optimize_application(
         selected_profile_facts=selected_profile_facts,
         llm_caller=llm_caller,
     )
+    strategy = build_application_strategy(
+        job_title=job_title,
+        company=company,
+        jd_signals=jd_signals,
+        analysis=analysis,
+        ats_result=ats_result,
+        selected_profile_facts=selected_profile_facts,
+    )
 
     return GenerationResult(
         role_family=jd_signals.role_family,
@@ -139,6 +157,7 @@ def optimize_application(
         resume_text=resume_text,
         cover_letter_text=cover_letter_text,
         ats_result=ats_result,
+        strategy=strategy,
         iteration_count=iteration_count,
         skip_reason="",
     )
